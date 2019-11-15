@@ -14,7 +14,6 @@ users = [];
 io.on('connection', function(socket) {
    console.log('A user connected');
    socket.on('setUsername', function(data) {
-      console.log(data);
 
       if(users.indexOf(data) > -1) {
          socket.emit('userExists', data + ' username is taken! Try some other username.');
@@ -30,9 +29,7 @@ io.on('connection', function(socket) {
    })
 });
 
-
-server.listen(process.env.PORT,process.env.IP, function(){
+port = process.env.PORT || 3000
+server.listen(port,process.env.IP, function(){
     console.log('app running');
 });
-
-

@@ -11,6 +11,7 @@
          socket.emit('setUsername', document.getElementById('name').value);
       };
       var user;
+      var address;
       socket.on('userExists', function(data) {
          document.getElementById('error-container').innerHTML = data;
       });
@@ -38,8 +39,13 @@
       <div id = "error-container"></div>
       <input id = "name" type = "text" name = "name" value = ""
          placeholder = "Enter your name!">
+
+      <input id = "address" type = "text" name = "address" value = ""
+      placeholder = "Enter your address!">
+
       <button type = "button" name = "button" onclick = "setUsername()">
-         Let me chat!
+         Enter the room
       </button>
+
    </body>
 </html>
