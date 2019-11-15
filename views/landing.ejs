@@ -5,13 +5,40 @@
    </head>
 
    <script src = "/socket.io/socket.io.js"></script>
+   <script async defer
+   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1VoKDBtn5fiqP4eyA5CvD6kGvqMzeSc&callback=initMap">
+   </script>
+   <script>
+     var geocoder = new google.maps.Geocoder();
+     var userAddress;
+     function geocodeAddress(geocoder, resultsMap) {
+       var address = document.getElementById('address').value;
+       geocoder.geocode({'address': address}, function(results, status) {
+         if (status === 'OK') {
+           userAddresss = results[0].geometry.location;
+         } else {
+           alert('Geocode was not successful for the following reason: ' + status);
+         }
+       });
+     }
+   </script>
    <script>
       var socket = io();
       function setUsername() {
-         socket.emit('setUsername', document.getElementById('name').value);
+        var userData = {name:document.getElementById('name').value, address:document.getElementById('address').value};
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'address': userData.address}, function(results, status) {
+          if (status === 'OK') {
+            userData.address = results[0].geometry.location;
+            socket.emit('setUsername', userData);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+
       };
+
       var user;
-      var address;
       socket.on('userExists', function(data) {
          document.getElementById('error-container').innerHTML = data;
       });
