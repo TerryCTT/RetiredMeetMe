@@ -10,7 +10,7 @@ app.get('/', function(req,res){
 })
 
 app.get('/testing', function(req,res){
-    res.render("testing");
+    res.render("meeting");
 })
 
 var port = process.env.port || 3000;
