@@ -30,7 +30,7 @@ io.on('connection', function(socket) {
    })
 });
 
-port = process.env.PORT || 3000
-server.listen(port, function(){
+
+server.listen(process.env.PORT,process.env.IP, function(){
     console.log('app running');
 });
