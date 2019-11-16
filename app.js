@@ -21,7 +21,7 @@ io.on('connection', function(socket) {
       } else {
          users.push(data);
 				 console.log(users);
-         socket.emit('userSet', {username: data.name});
+         socket.emit('userSet', {username: data});
       }
    });
 
