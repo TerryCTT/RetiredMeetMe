@@ -11,7 +11,7 @@ app.get('/', function(req, res) {
 });
 
 users = [];
-
+var midpoint;
 io.on('connection', function(socket) {
    console.log('A user connected');
    socket.on('setUsername', function(data) {
@@ -21,11 +21,16 @@ io.on('connection', function(socket) {
       } else {
          users.push(data);
 				 console.log(users);
-         socket.emit('userSet', {username: data});
+         socket.emit('userSet', {username: data.name,users:users});
       }
    });
 
-
+	 socket.on('midpoint',function(data){
+		 midpoint = data.midpoint;
+		 console.log("MIDPOINT DATA")
+		 console.log(midpoint);
+		 io.sockets.emit('midpointoutput', {midpoint:midpoint});
+	 })
    socket.on('msg', function(data) {
       //Send message to everyone
       io.sockets.emit('newmsg', data);

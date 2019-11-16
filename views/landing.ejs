@@ -39,38 +39,38 @@
       };
 
       function calculateMidpoint(coordinates) {
+
           var i;
-          var latSum;
-          var longSum;
+          var latSum =0;
+          var longSum =0;
 
           for (i = 0; i < coordinates.length; i++) {
-            latSum += coordinates[i].address.lat;
-            longSum += coordinates[i].address.long;
+            latSum += parseFloat(coordinates[i].address.lat);
+            longSum += parseFloat(coordinates[i].address.lng);
           }
 
           var midLat = latSum / coordinates.length;
           var midLong = longSum / coordinates.length;
-
           var midpoint = {
               address: {
                   lat: midLat,
                   long: midLong
               }
-          }
-          alert(midpoint);
+          };
           return midpoint;
-      }
+      };
 
       var user;
       socket.on('userExists', function(data) {
          document.getElementById('error-container').innerHTML = data;
       });
       socket.on('userSet', function(data) {
-         user = data.username.name;
-         document.body.innerHTML = '<input type = "text" id = "message">\
-         <button type = "button" name = "button" onclick = "sendMessage()">Send</button>
-         <button type = "button" name = "button" onclick = "calculateMidpoint(data.username)">Test</button>
-         <div id = "message-container"></div>';
+        user = data.username;
+        mid=calculateMidpoint(data.users);
+        socket.emit('midpoint',{midpoint:mid});
+        document.body.innerHTML = '<input type = "text" id = "message">\
+        <button type = "button" name = "button" onclick = "sendMessage()">Send</button>\
+        <div id = "message-container"></div>';
       });
       function sendMessage() {
          var msg = document.getElementById('message').value;
@@ -78,6 +78,12 @@
             socket.emit('msg', {message: msg, user: user});
          }
       }
+      socket.on('midpointoutput', function(data) {
+         if(user) {
+            document.getElementById('message-container').innerHTML += '<div><b>' +"User entered, new midpoint: " +
+               data.midpoint.address.lat + '</b>: ' + data.midpoint.address.long + '</div>'
+         }
+      })
       socket.on('newmsg', function(data) {
          if(user) {
             document.getElementById('message-container').innerHTML += '<div><b>' +
