@@ -1,0 +1,12 @@
+body {
+  border-style: solid;
+  border-width: 10px;
+  border-color: blue;
+  text-align: center;
+}
+
+h1 {
+  font-family: Arial;
+  font-size: 50px;
+  text-align: center;
+}
