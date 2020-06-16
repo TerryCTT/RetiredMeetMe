@@ -12,7 +12,7 @@ var originObj = [
 
 //create google maps client
 const googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyDHn0zF-JmlwAjc8JCD_zaVMT1G2tk2ZHQ'
+  key: 'insert google maps api key here'
 });
 
 //Create origins string
